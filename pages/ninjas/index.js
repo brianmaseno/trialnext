@@ -1,0 +1,36 @@
+import Link from "next/link";
+export const getStaticProps = async () =>{
+
+    const res = await fetch('https://jsonplaceholder.typicode.com/users');
+    const data = await res.json();
+    return {
+        props: { ninjas:data}
+    }
+}
+
+const Ninjas = ({ninjas}) => {
+    return (  
+        <>
+    <div>
+        <Link href={'/'}>Ninjas</Link>
+        <h2>Users of our platform</h2>
+        {ninjas.map(ninja => (
+            
+            <>
+            <Link href={'/ninjas/' +ninja.id} className="single" key={ninja.id}>
+            <h3 >{ninja.name}</h3>
+            <p >{ninja.username}</p>
+            <p >{ninja.email}</p>
+            <p >{ninja.address.zipcode}</p>
+            </Link>
+           
+            </>
+        )
+
+        )}
+        </div>
+        </>
+    );
+}
+ 
+export default Ninjas;
